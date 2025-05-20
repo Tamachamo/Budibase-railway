@@ -1,24 +1,28 @@
-FROM node:18-slim
+FROM debian:bullseye-slim
 
-# 必要なツールのインストール
+# 環境変数
+ENV DEBIAN_FRONTEND=noninteractive
+
+# 必要なツール・Budibase CLIをインストール
 RUN apt-get update && apt-get install -y \
     curl \
+    gnupg \
     redis-server \
     couchdb \
+    nodejs \
+    npm \
     && apt-get clean
 
-# 作業ディレクトリの設定
-WORKDIR /app
-
-# Budibase CLIのインストール
+# Budibase CLI インストール
 RUN npm install -g @budibase/cli
 
-# エントリポイントスクリプトのコピーと実行権限の付与
+# 作業ディレクトリ
+WORKDIR /app
+
+# Entrypointスクリプトをコピー
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# ポートの公開
 EXPOSE 10000
 
-# エントリポイントの設定
-ENTRYPOINT ["bash", "/usr/local/bin/docker-entrypoint.sh"]
+ENTRYPOINT ["docker-entrypoint.sh"]
