@@ -1,10 +1,4 @@
 #!/bin/bash
 
-# Redisの起動
-service redis-server start
-
-# CouchDBの起動
-service couchdb start
-
-# Budibaseの起動
-budibase start
+# Budibaseを起動（CLIがMinIO/CouchDB/Redis含め起動）
+exec budibase start
