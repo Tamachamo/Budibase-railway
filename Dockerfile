@@ -21,4 +21,4 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 EXPOSE 10000
 
 # エントリポイントの設定
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["bash", "/usr/local/bin/docker-entrypoint.sh"]
